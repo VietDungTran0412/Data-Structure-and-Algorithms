@@ -78,6 +78,7 @@ class LinkedList:
 			prev = itr  
 			itr = temp
 		self.head = prev
+
 	def mergeNodes(self):
 		itr = self.head
 		sum = Node(0,None)
@@ -128,6 +129,18 @@ class LinkedList:
 		right = self.mergeSort(head2)
 		final_list = self.sortedMerge(left,right)
 		return final_list
+def reverse_recursive(head):
+	if head is None:
+		return None
+	if head.next is None:
+		return head
+	second = head.next
+	head.next = None
+	reverse = reverse_recursive(second)
+	second.next = head
+	return reverse
+def merge_sorted_linkedlist():
+	pass
 if __name__ == '__main__':
 	ll = LinkedList()
 	ll.insert_at_begining(5)
@@ -147,7 +160,6 @@ if __name__ == '__main__':
 
 	ll3 = LinkedList()
 	ll3.insert_values([1,2,3,4,5,6])
-	
 
 
 
