@@ -1,3 +1,7 @@
+from multiprocessing.dummy import Array
+from typing import List
+
+
 class Node:
     def __init__(self,x) -> None:
         self.val = x
@@ -13,7 +17,7 @@ class SinglyLinkedList:
             while temp.next:
                 temp = temp.next
             temp.next = Node(data)
-    def insert_values(self,ar):
+    def insert_values(self,ar: List):
         for element in ar:
             self.append(element)
     def print(self):

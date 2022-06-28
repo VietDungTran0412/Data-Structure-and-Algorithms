@@ -2,7 +2,6 @@ class Node:
 	def __init__(self, data =None, next = None):
 		self.data = data
 		self.next = next
-
 class LinkedList:
 	def __init__(self):
 		self.head = None
@@ -103,7 +102,7 @@ class LinkedList:
 		fast = head
 		while fast.next and fast.next.next:
 			slow = slow.next
-			fast = fast.next
+			fast = fast.next.next
 		return slow
 	def sortedMerge(self,ll1,ll2):
 		if ll1 is None:
