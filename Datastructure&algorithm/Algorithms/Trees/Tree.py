@@ -20,30 +20,38 @@ class BinarySearchTreeNode:
         elements = []
         elements.append(self.data)
         if self.left:
-            elements += self.preorder()
+            elements += self.left.preorder()
         if self.right:
-            elements += self.preorder()
+            elements += self.right.preorder()
         return elements
     def inorder(self)->list:
         elements = []
         if self.left:
-            elements += self.preorder()
+            elements += self.left.preorder()
         elements.append(self.data)
         if self.right:
-            elements += self.preorder()
+            elements += self.right.preorder()
         return elements
     def postorder(self)->list:
         elements = []
         if self.left:
-            elements += self.preorder()
+            elements += self.left.preorder()
         if self.right:
-            elements += self.preorder()
+            elements += self.right.preorder()
         elements.append(self.data)
         return elements
+class Tree:
+    def __init__(self,data) -> None:
+        self.data = data
+        self.parent = None
+        self.children = []
+    def add_child(self,val):
+        pass
 def build_tree(elements):
     if len(elements) == 0:
         return None
     root = BinarySearchTreeNode(elements[0])
     for i in range(1,len(elements)):
         root.insert(elements[i])
-    return root        
+    return root  
+

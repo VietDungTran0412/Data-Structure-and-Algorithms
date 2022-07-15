@@ -1,7 +1,7 @@
 from stack import DynamicStack
 class Solution:
     def printSolution(self):
-        prices = [1,3,4,5,2]
+        prices = [4,2,6,3,1,2]
         print(self.findingSpans(prices,5))
     def findingSpans(self,prices: list,n: int)->list:
         res = [1 for i in range(len(prices))]
