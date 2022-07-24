@@ -40,13 +40,23 @@ class BinarySearchTreeNode:
             elements += self.right.preorder()
         elements.append(self.data)
         return elements
-class Tree:
+class NAryTreeNode:
     def __init__(self,data) -> None:
         self.data = data
         self.parent = None
         self.children = []
-    def add_child(self,val):
-        pass
+    def add_child(self,child):
+        child.parent = self
+        self.children.append(child)
+class TreeNode:
+    def __init__(self,data) -> None:
+        self.data = data
+        self.firstChild = None
+        self.secondChild = None
+        self.thirdChild = None
+        self.fourthChild = None
+        self.fifthChild = None
+        self.sixthChild = None
 def build_tree(elements):
     if len(elements) == 0:
         return None
