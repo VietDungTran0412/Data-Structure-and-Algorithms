@@ -24,7 +24,7 @@ class Solution:
         if root.data == totalSum//totalNodes:
             count +=1
         subnodes.sum += root.data
-        subnodes.count += root.data
+        subnodes.count += 1
         return count
     def averageOfSubtree(self,root):
         subnode = Subnode()

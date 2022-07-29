@@ -28,5 +28,7 @@ class Solution:
             root.data = min
             root.right = self.deleteNodeBST(root.right,min)
         return root
+
+
         
 print(Solution())
