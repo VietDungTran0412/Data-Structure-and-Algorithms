@@ -1,24 +1,33 @@
-from Graph import Graph
 class BreadthFirstSearch:
-    def getPaths(self,graph,vertex):
-        print(self.bfs(graph,vertex))
-    def bfs(self,graph: Graph,vertex):
-        if vertex not in graph.graph_dict:
+    def __init__(self,edges) -> None:
+        self.graph_dict = {}
+        for start,end in edges:
+            if start in self.graph_dict:
+                self.graph_dict[start].append(end)
+            elif start not in self.graph_dict:
+                self.graph_dict[start] = [end]
+            if end in self.graph_dict:
+                self.graph_dict[end].append(start)
+            elif end not in self.graph_dict:
+                self.graph_dict[end] = [start]
+        print(self.graph_dict)
+    def search(self,start):
+        if start not in self.graph_dict:
             return []
-        nodes = [vertex]
+        q = [start]
         visited = set()
-        q = [vertex]
+        visited.add(start)
+        path = [start]
         while len(q)>0:
-            cur = q[0]
+            temp = q[0]
             q = q[1:]
-            visited.add(cur)
-            for edge in graph.graph_dict[cur]:
-                if edge not in visited:
-                    nodes.append(edge)
-                    q.append(edge)
-                    visited.add(edge)
-        return nodes
-routes = [("Hanoi","Haiphong"),("Hanoi","Thainguyen"),("Hanoi","Langson"),
-            ("Haiphong","Haiduong"),("Haiduong","Halong")]
-graph = Graph(routes)
-BreadthFirstSearch().getPaths(graph,"Hanoi")
+            if temp in self.graph_dict:
+                for edge in self.graph_dict[temp]:
+                    if edge not in visited:
+                        visited.add(edge)
+                        path.append(edge)
+                        q.append(edge)
+        return path
+bfs = BreadthFirstSearch([("Hanoi","Haiphong"),("Hanoi","Thainguyen"),("Hanoi","Langson"),
+            ("Haiphong","Haiduong"),("Haiduong","Halong")])
+print(bfs.search("Hanoi"))

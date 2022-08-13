@@ -1,16 +1,32 @@
 from Graph import Graph
 class DepthFirstSearch:
-    def getPaths(self,graph: Graph,vertex):
-        print(self.dfs(graph,vertex))
-    def dfs(self,graph: Graph,vertex,visited = set()):
-        paths = [vertex]
-        visited.add(vertex)
-        # if vertex not in graph.graph_dict:
-        #     return paths
-        for neighbor in graph.graph_dict[vertex]:
-            if neighbor not in visited:
-                paths += self.dfs(graph,neighbor,visited)
-        return paths
-routes = [("Hanoi","Haiphong"),("Haiphong","Hungyen"),("Hanoi","Hungyen"),("Haiphong","Thainguyen"),("Thainguyen","Hungyen")]
-graph = Graph(routes)
-DepthFirstSearch().getPaths(graph,"Hanoi")
+    def __init__(self,edges) -> None:
+        self.graph_dict = {}
+        for start,end in edges:
+            if start not in self.graph_dict:
+                self.graph_dict[start] = [end]
+            elif start in self.graph_dict:
+                self.graph_dict[start].append(end)
+            if end not in self.graph_dict:
+                self.graph_dict[end] = [start]
+            elif end in self.graph_dict:
+                self.graph_dict[end].append(start)
+        print(self.graph_dict)
+    def search(self,start,visited = set()):
+        if start in visited:
+            return []
+        if start not in self.graph_dict:
+            return []
+        visited.add(start)
+        path = [start]
+        if start in self.graph_dict:
+            for edge in self.graph_dict[start]:
+                if edge not in visited:
+                    path += self.search(edge,visited)
+                    visited.add(edge)
+        return path
+
+edges = routes = [("Hanoi","Haiphong"),("Hanoi","Thainguyen"),("Hanoi","Langson"),
+            ("Haiphong","Haiduong"),("Haiduong","Halong")]
+dfs = DepthFirstSearch(edges)
+print(dfs.search("Hanoi"))
