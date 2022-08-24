@@ -1,16 +1,14 @@
-import heapq
-import unittest
+from Heap import MaxHeap
 class Solution:
+    def __repr__(self) -> str:
+        nums = [5,2,7,10,15,3,8,6,5]
+        self.heapSort(nums)
+        return str(nums)
     def heapSort(self,nums):
-        newAr = []
-        heapq.heapify(nums)
+        heap = MaxHeap(len(nums))
         for i in range(len(nums)):
-            newAr.append(heapq.heappop(nums))
-        for j in range(len(newAr)):
-            nums.append(newAr[j])
-class TestSort(unittest.TestCase):
-    ar =[2,1,5,4,3,8,7,6]
-    def testAr(self):     
-        Solution().heapSort(self.ar)
-        self.assertEqual([1,2,3,4,5,6,7,8],self.ar)
-unittest.main()
+            heap.insert(nums[i])
+        for j in range(len(nums)):
+            nums[j] = heap.delete()
+        
+print(Solution())

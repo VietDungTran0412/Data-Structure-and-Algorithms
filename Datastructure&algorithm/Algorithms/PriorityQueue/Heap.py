@@ -1,73 +1,121 @@
-from heapq import heapify
-from heapq import heappush
-from heapq import heappop
-class Heap:
-    def _parent(self,pos):
-        if pos % 2  == 0: return pos//2-1
-        return pos//2
-    def _swap(self,pos1,pos2,nums):
-        nums[pos1], nums[pos2] = nums[pos2], nums[pos1]
-    def minHeapify(self,pos,nums):
-        if pos == 0:
+
+class MaxHeap:
+    def __init__(self,size) -> None:
+        self.ar = [None for i in range(size)]
+        self.length = 0
+        self.capacity = size
+    def __parent(self,pos: int)->int:
+        if pos <= 0 or pos >= self.length:
+            return -1
+        return (pos-1)//2
+    def __leftChild(self,pos: int)->int:
+        left = 2*pos+1
+        if left >= self.length:
+            return -1
+        return left
+    def __rightChild(self,pos: int)->int:
+        right = 2*pos+2
+        if right >= self.length:
+            return -1
+        return right
+    def getMax(self):
+        if self.length == 0:
+            return -1
+        return self.ar[0]
+    def percolateDown(self,pos):
+        l = self.__leftChild(pos)
+        r = self.__rightChild(pos)
+        if l != -1 and self.ar[l] > self.ar[pos]:
+            max = l
+        else:
+            max = pos
+        if r!= -1 and self.ar[r] > self.ar[max]:
+            max = r
+        if max != pos:
+            self.ar[pos], self.ar[max] = self.ar[max], self.ar[pos]
+            self.percolateDown(max)
+    def delete(self):
+        if self.length == 0:
+            return -1
+        data = self.ar[0]
+        self.ar[0] = self.ar[self.length-1]
+        self.ar[self.length-1] = None
+        self.length-=1
+        self.percolateDown(0)
+        return data
+    def insert(self,val):
+        if self.length == self.capacity:
             return
-        parent = self._parent(pos)
-        if nums[parent] >= nums[pos]:
-            self._swap(pos,parent,nums)
-            self.minHeapify(parent,nums)
-    def _leftChild(self,pos):
-        return pos*2+1
-    def _rightChild(self,pos):
-        return (pos+1)*2
-    def _isLeaf(self,pos,nums):
-        return self._leftChild(pos) >= len(nums) or self._rightChild(pos) >=len(nums)
-    def heappop(self,nums):
-        if len(nums) == 0:
-            return 
-        temp = nums[0]
-        self._swap(0,len(nums)-1,nums)
-        nums.pop()
-        i = 0
-        while not self._isLeaf(i,nums):
-            left = self._leftChild(i)
-            right = self._rightChild(i)
-            if not self._isLeaf(left,nums) and not self._isLeaf(right,nums):
-                if nums[i] > nums[left] and nums[i] > nums[right]:
-                    if nums[left] > nums[right]:
-                        self._swap(i,right,nums)
-                        i = right
-                    elif nums[right] > nums[left]:
-                        self._swap(i,left,nums)
-                        i = left
-                elif nums[i] > nums[left] or nums[i] > nums[right]:
-                    if nums[i] > nums[left]:
-                        self._swap(i,left,nums)
-                        i = left
-                    elif nums[i] > nums[right]:
-                        self._swap(i,right,nums)
-                        i = right
-                elif nums[i] < nums[left] and nums[i] < nums[right]:
-                    return temp
-            elif not self._isLeaf(left,nums) or not self._isLeaf(right,nums):
-                if not self._isLeaf(left,nums):
-                    if nums[i] > nums[left]:
-                        self._swap(i,left,nums)
-                        i = left
-                    else:
-                        return temp
-                elif not self._isLeaf(right,nums):
-                    if nums[i] > nums[right]:
-                        self._swap(i,right,nums)
-                        i = right
-                    else:
-                        return temp
-        return temp
- 
-l = [5,7,9,1,3,8]
-heap = Heap()
-for i in range(len(l)-1,-1,-1):
-    heap.minHeapify(i,l)
-ar = []
-for j in range(len(l)):
-    temp = heap.heappop(l)
-    ar.append(temp)
-print(ar)
+        self.length +=1
+        i = self.length-1
+        self.ar[i] = val
+        while i !=0:
+            parent = self.__parent(i)
+            if self.ar[i] > self.ar[parent]:
+                self.ar[i], self.ar[parent] = self.ar[parent], self.ar[i]
+                i = parent
+            else:
+                break
+    def convertArToHeap(self,nums: list[int]):
+        for num in nums:
+            self.insert(num)
+class MinHeap:
+    def __init__(self,size) -> None:
+        self.ar = [None for i in range(size)]
+        self.length = 0
+        self.capacity = size
+    def __parent(self,pos: int)->int:
+        if pos <= 0 or pos >= self.length:
+            return -1
+        return (pos-1)//2
+    def __leftChild(self,pos: int)->int:
+        left = 2*pos+1
+        if left >= self.length:
+            return -1
+        return left
+    def __rightChild(self,pos: int)->int:
+        right = 2*pos+2
+        if right >= self.length:
+            return -1
+        return right
+    def getMin(self):
+        if self.length == 0:
+            return -1
+        return self.ar[0]
+    def percolateDown(self,pos):
+        l = self.__leftChild(pos)
+        r = self.__rightChild(pos)
+        if l != -1 and self.ar[l] < self.ar[pos]:
+            min = l
+        else:
+            min = pos
+        if r!= -1 and self.ar[r] < self.ar[min]:
+            min = r
+        if min != pos:
+            self.ar[pos], self.ar[min] = self.ar[min], self.ar[pos]
+            self.percolateDown(min)
+    def delete(self):
+        if self.length == 0:
+            return -1
+        data = self.ar[0]
+        self.ar[0] = self.ar[self.length-1]
+        self.ar[self.length-1] = None
+        self.length-=1
+        self.percolateDown(0)
+        return data
+    def insert(self,val):
+        if self.length == self.capacity:
+            return
+        self.length +=1
+        i = self.length-1
+        self.ar[i] = val
+        while i !=0:
+            parent = self.__parent(i)
+            if self.ar[i] < self.ar[parent]:
+                self.ar[i], self.ar[parent] = self.ar[parent], self.ar[i]
+                i = parent
+            else:
+                break
+    def convertArToHeap(self,nums: list[int]):
+        for num in nums:
+            self.insert(num)
