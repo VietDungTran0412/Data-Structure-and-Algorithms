@@ -1,6 +1,6 @@
 class Solution:
     def __repr__(self) -> str:
-        return str([self.fib(7),self.dynamicProgrammingFib(7)])
+        return str(self.fib(50))
     def fib(self,n):
         if n == 1 or n == 2:
             return 1

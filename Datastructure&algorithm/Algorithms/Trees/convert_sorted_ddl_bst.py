@@ -66,6 +66,3 @@ class Solution:
         return root
 
 print(Solution())
-a = {"a":1,"b":3}
-a.pop("a")
-print(a)

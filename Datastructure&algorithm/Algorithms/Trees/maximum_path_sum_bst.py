@@ -13,7 +13,7 @@ class Solution:
         return res.s
     def findPathSumUtil(self,root: BinarySearchTreeNode, res: Sum()):
         if root is None:
-            return 0
+            return -math.inf
 
         l = self.findPathSumUtil(root.left,res)
         r = self.findPathSumUtil(root.right,res)

@@ -119,3 +119,13 @@ class MinHeap:
     def convertArToHeap(self,nums: list[int]):
         for num in nums:
             self.insert(num)
+class Parent:
+    def __init__(self,val) -> None:
+        self.val = val
+    def print_value(self):
+        print(self.val)
+
+class Child(Parent):
+    def __init__(self, val) -> None:
+        super().__init__(val)
+
